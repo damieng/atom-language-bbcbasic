@@ -14,7 +14,7 @@ repository:
     match: '^\\s*(\\d+)?\\s*(.*)'
     captures:
       '1':
-        name: 'constant.numeric.line.bbc'
+        name: 'meta.line.number.bbc'
       '2':
         patterns: [
           {
@@ -284,6 +284,10 @@ repository:
             name: 'keyword.control.bbc'
           2:
             patterns: [
+              {
+                match: '\\s*[0-9]+\\b'
+                name: 'meta.line.number.bbc'
+              }
               { include: '#numericOnlySource' }
             ]
       }
@@ -787,7 +791,7 @@ repository:
     patterns: [
       {
         begin: '(ABS|ACS|ASN|ATN|COS|DEG|EXP|INT|LN|LOG|RAD|RND|SGN|SIN|SQR|TAN)'
-        end: '(?=[:;])'
+        end: '(?=[:;)])'
         beginCaptures:
           1:
             name: 'keyword.math.bbc'
