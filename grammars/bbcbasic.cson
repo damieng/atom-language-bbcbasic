@@ -779,7 +779,7 @@ repository:
         name: 'punctation.math.operator.bbc'
       }
       {
-        match: '(NOT|AND|DIV|MOD)'
+        match: '(NOT|AND|DIV|MOD|OR)'
         name: 'keyword.bbc'
       }
     ]
