@@ -599,15 +599,15 @@ repository:
         captures:
           1:
             patterns: [
-              { include: '#numericSource' }
               { include: '#stringSource' }
+              { include: '#numericSource' }
             ]
           2:
             name: 'meta.conditional.punctuation.bbc'
           3:
             patterns: [
-              { include: '#numericSource' }
               { include: '#stringSource' }
+              { include: '#numericSource' }
             ]
       }
       {
@@ -616,15 +616,15 @@ repository:
         captures:
           1:
             patterns: [
-              { include: '#numericSource' }
               { include: '#stringSource' }
+              { include: '#numericSource' }
             ]
           2:
             name: 'meta.conditional.punctuation.bbc'
           3:
             patterns: [
-              { include: '#numericSource' }
               { include: '#stringSource' }
+              { include: '#numericSource' }
             ]
       }
     ]
