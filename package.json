@@ -1,6 +1,6 @@
 {
   "name": "language-bbc-basic",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Language support for BBC Basic",
   "homepage": "https://github.com/damieng/atom-language-bbcbasic",
   "repository": {
