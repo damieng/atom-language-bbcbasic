@@ -7,7 +7,7 @@ LET temp%=5
 
 REM ACS arc-cosine
 10 X=ACS(Y)
-1205 angle=DEG (ACS(0.5678))
+1205 angle=DEG (ACS(0.5678) )
 330 OUT=ACS(.234)
 PRINT ACS (0.5)
 
@@ -46,6 +46,7 @@ REM CALL transfer control to a machine code subroutine
 50 rotate=&0270
 60 CALL rotate,J,K,L
 200 CALL 1234,A$,M,J$
+LET A=(1)+(2)+ABS(DEG(4))
 
 REM CHAIN
 900 CHAIN "GAME__1"
@@ -78,7 +79,7 @@ COLOUR 129
 REM COS cosine
 PRINT COS(2.45)
 780 X=COS(Y)
-655 Number=COS (RAD (45))
+655 Number=COS (RAD(45))
 
 REM COUNT
 290 A=COUNT

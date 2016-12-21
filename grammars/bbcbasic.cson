@@ -125,7 +125,7 @@ repository:
       }
       {
         name: 'meta.for.statement.bbc'
-        match: '(FOR)\\s*([a-zA-Z]+[a-zA-Z0-9]*[%]?)\\s*=(.+)(TO)(.+)(STEP)(.+)'
+        match: '(FOR)\\s*([a-zA-Z]+[a-zA-Z0-9]*[%]?)\\s*=(.+)(TO)(.+)(STEP)([^:]+)'
         captures:
           1:
             name: 'keyword.control.bbc'
@@ -153,7 +153,7 @@ repository:
       }
       {
         name: 'meta.for.statement.bbc'
-        match: '(FOR)\\s*([a-zA-Z]+[a-zA-Z0-9]*[%]?)\\s*=(.+)(TO)(.+)'
+        match: '(FOR)\\s*([a-zA-Z]+[a-zA-Z0-9]*[%]?)\\s*=(.+)(TO)([^:]+)'
         captures:
           1:
             name: 'keyword.control.bbc'
@@ -204,7 +204,7 @@ repository:
             name: 'keyword.control.bbc'
       }
       {
-        match: '(NEXT)(.*)\\s*'
+        match: '(NEXT)([^:]+)'
         captures:
           1:
             name: 'keyword.control.bbc'
@@ -215,7 +215,7 @@ repository:
             ]
       }
       {
-        begin: '(CLOSE\\s*#|COLOUR|MODE|WIDTH)\\s*'
+        begin: '(CLOSE\\s*#|COLOUR|MODE|WIDTH)'
         beginCaptures:
           1:
             name: 'keyword.io.bbc'
@@ -278,7 +278,7 @@ repository:
         end: '(?=:)'
       }
       {
-        match: '(GOSUB|GOTO)(.+)'
+        match: '(GOSUB|GOTO)([^:]+)'
         captures:
           1:
             name: 'keyword.control.bbc'
@@ -296,7 +296,7 @@ repository:
         name: 'keyword.control.bbc'
       }
       {
-        match: '(BPUT\\s*#)(.+),(.+)'
+        match: '(BPUT\\s*#)(.+),([^:]+)'
         captures:
           1:
             name: 'keyword.io.bbc'
@@ -339,7 +339,7 @@ repository:
         end: '(?=:)'
       }
       {
-        begin: '(RESTORE)(.*)'
+        begin: '(RESTORE)([^:]*)'
         beginCaptures:
           1:
             name: 'keyword.data.bbc'
@@ -354,7 +354,7 @@ repository:
         name: 'keyword.control.bbc'
       }
       {
-        match: '(TRACE)\\s*(.+)'
+        match: '(TRACE)\\s*([^:]+)'
         captures:
           1:
             name: 'keyword.control.bbc'
@@ -368,7 +368,7 @@ repository:
         name: 'keyword.control.bbc'
       }
       {
-        match: '(ON\\s*ERROR)(.*)'
+        match: '(ON\\s*ERROR)([^:]*)'
         captures:
           1:
             name: 'keyword.control.bbc'
@@ -378,7 +378,7 @@ repository:
             ]
       }
       {
-        match: '(ON)\\s*([A-Za-z]+[A-Za-z0-9]*)\\s*(GOTO|GOSUB)(.*)'
+        match: '(ON)\\s*([A-Za-z]+[A-Za-z0-9]*)\\s*(GOTO|GOSUB)([^:]+)'
         captures:
           1:
             name: 'keyword.control.bbc'
@@ -395,7 +395,7 @@ repository:
             ]
       }
       {
-        match: '(REPEAT)(.*)'
+        match: '(REPEAT)([^:]+)'
         captures:
           1:
             name: 'keyword.control.bbc'
@@ -405,7 +405,7 @@ repository:
             ]
       }
       {
-        match: '(UNTIL)(.+)'
+        match: '(UNTIL)([^:]+)'
         captures:
           1:
             name: 'keyword.control.bbc'
