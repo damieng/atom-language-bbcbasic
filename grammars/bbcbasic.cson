@@ -1,7 +1,6 @@
 scopeName: 'source.bbc'
 fileTypes: [
   '.bas'
-  '.bbc'
 ]
 name: 'BBC Basic'
 patterns: [
@@ -28,6 +27,20 @@ repository:
         ]
   statement:
     patterns: [
+      {
+        begin: '(PROC)([A-Za-z]+[A-Za-z0-9_]*)'
+        beginCaptures:
+          1:
+            name: 'keyword.control.bbc'
+          2:
+            name: 'entity.function.name.bbc'
+        patterns: [
+          { include: '#stringVariableName' }
+          { include: '#numericVariableName' }
+          { match: ',' }
+        ]
+        end: '(?=:)'
+      }
       { include: '#keywords' }
       { include: '#assignment' }
       {
@@ -40,8 +53,18 @@ repository:
               { include: '#numericVariableName' }
             ]
       }
+      { include: '#starCommands' }
       { include: '#invalid' }
     ]
+  starCommands:
+    begin: '(\\*[A-Z]+)\\s*'
+    beginCaptures:
+      1:
+        name: 'support.function.bbc'
+    patterns: [
+      { include: '#numericSource' }
+    ]
+    end: '(?=:)'
   assignment:
     patterns: [
       {
@@ -49,7 +72,7 @@ repository:
         begin: '(LET\\s*)?([A-Za-z]+[0-9A-Za-z_]*[$])\\s*=\\s*'
         beginCaptures:
           1:
-            name: 'keyword.assignment.cs'
+            name: 'keyword.assignment.bbc'
           2:
             patterns: [
               { include: '#stringVariableName' }
@@ -61,7 +84,7 @@ repository:
       }
       {
         name: 'meta.integer-assignment.bbc'
-        begin: '(LET\\s*)?([A-Za-z]+[0-9A-Za-z_]*[%])\\s*=\\s*'
+        begin: '(LET\\s*)?(([A-Za-z]+[0-9A-Za-z_]*|@)[%])\\s*=\\s*'
         beginCaptures:
           1:
             name: 'keyword.assignment.cs'
@@ -203,7 +226,7 @@ repository:
       }
       {
         name: 'keyword.io.bbc'
-        begin: '(DRAW|GCOL|MOVE)\\s*(.+?)\\s*,\\s*(.+?)'
+        begin: '(DRAW|GCOL|MOVE)\\s*(.+?)\\s*,\\s*(.+)'
         beginCaptures:
           1:
             name: 'keyword.io.bbc'
@@ -368,7 +391,7 @@ repository:
             ]
       }
       {
-        match: '(REPEAT)(.+)'
+        match: '(REPEAT)(.*)'
         captures:
           1:
             name: 'keyword.control.bbc'
@@ -389,7 +412,7 @@ repository:
       }
       {
         name: 'keyword.control.bbc'
-        begin: 'IF(.+)\\s+THEN(.+)ELSE(.+)'
+        begin: 'IF(.+)THEN(.+)ELSE(.+)'
         beginCaptures:
           1:
             patterns: [
@@ -470,22 +493,35 @@ repository:
         end: '(?=:)'
       }
       {
-        begin: '(DATA)(.*)'
+        begin: '(READ)'
         beginCaptures:
           1:
             name: 'keyword.data.bbc'
-          2:
-            patterns: [
-              {
-                match: '[,]'
-              }
-              { include: '#stringSource' }
-              { include: '#numericSource' }
-            ]
+        patterns: [
+          {
+            match: '[,]'
+          }
+          { include: '#stringVariableName' }
+          { include: '#numericVariableName' }
+        ]
         end: '(?=:)'
       }
       {
-        begin: '(DEF\\s*FN)(\\w+)([(].*[)])?'
+        begin: '(DATA)'
+        beginCaptures:
+          1:
+            name: 'keyword.data.bbc'
+        patterns: [
+          {
+            match: '[,]'
+          }
+          { include: '#stringSource' }
+          { include: '#numericSource' }
+        ]
+        end: '(?=:)'
+      }
+      {
+        begin: '(DEF\\s*FN)([A-Za-z]+[A-Za-z0-9_]*)([(].*[)])?'
         beginCaptures:
           1:
             name: 'keyword.control.bbc'
@@ -501,7 +537,7 @@ repository:
         end: '(?=:)'
       }
       {
-        begin: '(DEF\\s*PROC)(\\w+)([(].*[)])?'
+        begin: '(DEF\\s*PROC)([A-Za-z]+[A-Za-z0-9_]*)([(].*[)])?'
         beginCaptures:
           1:
             name: 'keyword.control.bbc'
@@ -732,12 +768,11 @@ repository:
   numericOperation:
     patterns: [
       {
-        match: '\\((.+)\\)'
-        captures:
-          1:
-            patterns: [
-              { include: '#numericSource' }
-            ]
+        begin: '\\('
+        patterns: [
+          { include: '#numericSource' }
+        ]
+        end: '\\)'
       }
       {
         match: '\\+|-|\\*|/'
@@ -875,7 +910,7 @@ repository:
             ]
       }
       {
-        match: '(VAL)(.+)'
+        match: '(VAL\\s*[(](.*?)[)])'
         captures:
           1:
             name: 'keyword.stringfunction.bbc'
@@ -883,6 +918,15 @@ repository:
             patterns: [
               { include: '#stringSource' }
             ]
+      }
+      {
+        match: '(VAL)(.*)'
+        captures:
+          1:
+            name: 'keyword.stringfunction.bbc'
+        patterns: [
+          { include: '#stringSource' }
+        ]
       }
     ]
   numericConstant:
@@ -911,7 +955,7 @@ repository:
     match: '[A-Za-z]+[0-9A-Za-z_]*[$]'
     name: 'entity.string.variable.name'
   integerVariableName:
-    match: '[A-Za-z]+[0-9A-Za-z_]*[%]'
+    match: '([A-Za-z]+[0-9A-Za-z_]*[%])|(@%)'
     name: 'entity.numeric.integer.variable.name'
   numericVariableName:
     match: '[A-Za-z]+[0-9A-Za-z_]*'
@@ -931,7 +975,7 @@ repository:
             ]
       }
       {
-        match: '(TAB)\\((.+),(.+)\\)'
+        match: '(TAB)\\((.+?),(.+?)\\)'
         captures:
           1:
             name: 'keyword.io.bbc'
